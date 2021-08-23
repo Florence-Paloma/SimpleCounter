@@ -1,15 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-const Counter = () => {
-	const [seconds, setSeconds] = useState(0);
+const Counter = props => {
+	//useSatet linkea la variable count con la función Counter
+	//Declare variable starting in State = 0
+	const [count, setCount] = useState(0);
+	//Provokes an effect when a condition is applied
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (count != 9) {
+				setCount(count + 1);
+			} else {
+				setCount(0);
+			}
+		}, 1000 * props.time);
+		// clear interval on re-render to avoid memory leaks //clearInterval()
+		return () => clearTimeout(interval);
+	}, [count]);
 
 	useEffect(() => {
-		setInterval(() => {
-			setSeconds(seconds => seconds + 1);
-		}, 1000);
-	}, []);
+		setCount(0);
+		return () => clearTimeout(count);
+	}, [props.stop]);
 
-	return <div className="text-center mt-5">{seconds}</div>;
+	return <div className="timer">{count}</div>;
+};
+
+Counter.propTypes = {
+	time: PropTypes.number,
+	stop: PropTypes.bool
 };
 
 export default Counter;

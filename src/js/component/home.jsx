@@ -1,29 +1,43 @@
-import React, { Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import Counter from "./Counter.jsx";
 
 //include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
+	const [stop, setStop] = useState(0);
+	const resetButton = () => {
+		setStop(!stop);
+	};
 	return (
-		<Fragment>
-			<div className="text-center mt-5">
-				<h1>Hello Rigo!</h1>
-				<p>
-					<img src={rigoImage} />
-				</p>
-				<a href="#" className="btn btn-success">
-					If you see this green button... bootstrap is working
-				</a>
-				<p>
-					Made by{" "}
-					<a href="http://www.4geeksacademy.com">4Geeks Academy</a>,
-					with love!
-				</p>
+		//Posicionar cada card
+		<div className="container d-flex  justify-content-center">
+			<div className="row">
+				<div className="colB col">
+					<i className="far fa-clock fa-2x mt-1"></i>
+				</div>
+				<div className="colButton col">
+					<button className="button" onClick={resetButton}>
+						Reset
+					</button>
+				</div>
+				<div className="colB col">
+					<Counter time={10000} stop={stop} />
+				</div>
+				<div className="colB col">
+					<Counter time={1000} stop={stop} />
+				</div>
+				<div className="colB col">
+					<Counter time={100} stop={stop} />
+				</div>
+				<div className="colB col">
+					<Counter time={10} stop={stop} />
+				</div>
+				<div className="colB col">
+					<Counter time={1} stop={stop} />
+				</div>
 			</div>
-			<Counter />
-		</Fragment>
+		</div>
 	);
 };
 
